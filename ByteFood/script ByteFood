@@ -1,0 +1,48 @@
+
+create table usuario(
+	id_usuario serial primary key,
+	email varchar(50) not null unique,
+	password varchar(10) not null
+
+);
+
+create table estado(
+	id_estado serial primary key,
+	nome varchar(50) not null unique
+);
+create table cidade(
+	id_cidade serial primary key,
+	nome varchar(50) not null unique
+);
+
+create table cliente(
+	id_cliente serial primary key,
+	nome varchar(50) not null,
+	cpf char(11) not null unique,
+	rua varchar(100),
+	numero int,
+	complemento varchar(10),
+	bairro varchar(20),
+	cidade serial references cidade,
+	estado serial references estado,
+	login serial references usuario
+);
+
+create table servico(
+	id_servico serial primary key,
+	nome varchar(50) not null,
+	cnpj char(15) not null unique,
+	rua varchar(100) not null,
+	numero int not null,
+	complemento varchar(10),
+	bairro varchar(20) not null,
+	cidade serial references cidade,
+	estado serial references estado,
+	login serial references usuario
+);
+
+create table avaliacao(
+	id_avaliacao serial primary key,
+	int avaliacao  default 0,--check avaliacao>=0 and check avaliacao<=5
+	servico serial references servico
+);
